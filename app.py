@@ -14,8 +14,8 @@ def connect_to_db():
                     password=os.getenv("MYSQL_PASSWORD"),
                     database=os.getenv("MYSQL_DATABASE")
                     )
-        except pymysql.err.OperationalError:
-            print("[DB] Not ready, retrying...")
+        except pymysql.err.OperationalError as e:
+            print(f"[DB] Not ready, retrying... errno: {e.args[0]}")
             time.sleep(2)
     raise RuntimeError("[DB] Cannot connect to DB after 10 attempts")
 
